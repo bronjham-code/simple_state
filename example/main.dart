@@ -1,5 +1,6 @@
 import 'package:easy_state/easy_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ExampleView extends StatefulWidget {
   const ExampleView({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class _ExampleViewState extends State<ExampleView> {
     _whenReaction = Reaction.when(
       observables: [counter],
       condition: () => counter.value == 2,
-      reaction: () => _asyncWhen,
+      reaction: _asyncWhen,
     );
     super.initState();
   }
@@ -45,11 +46,17 @@ class _ExampleViewState extends State<ExampleView> {
           observables: [counter],
           builder: (_) => Text(
             counter.value.toString(),
+            style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => counter.value! + 1,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(Icons.add),
+        label: const Text('Increment'),
+        onPressed: () {
+          counter.value = counter.value! + 1;
+        },
       ),
     );
   }
