@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:easy_state/src/observable/observable.dart';
 import 'package:easy_state/src/observer_subscribe.dart';
 import 'package:flutter/widgets.dart';

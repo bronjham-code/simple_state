@@ -1,9 +1,8 @@
 import 'package:easy_state/easy_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ExampleView extends StatefulWidget {
-  const ExampleView();
+  const ExampleView({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ExampleViewState();
