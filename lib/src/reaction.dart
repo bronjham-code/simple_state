@@ -21,15 +21,15 @@ class Reaction with ObserverSubscribe {
     required List<Observable> observables,
     required bool Function() condition,
     required void Function() reaction,
+    bool fireImmediately = false,
   }) async {
     final completer = Completer<bool>();
 
     final whenReaction = Reaction.when(
       observables: observables,
       condition: condition,
-      reaction: () {
-        completer.complete(true);
-      },
+      reaction: () => completer.complete(true),
+      fireImmediately: fireImmediately,
     );
 
     await completer.future;
