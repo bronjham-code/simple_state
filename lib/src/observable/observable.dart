@@ -8,8 +8,8 @@ class Observable<T> {
   T? get value => _value;
   Stream<bool> get stream => _syncController.stream;
 
-  void set(T? Function(T? oldValue) function) {
-    _value = function(_value);
+  set value(T? value) {
+    _value = value;
     _sync();
   }
 
