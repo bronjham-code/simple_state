@@ -1,36 +1,38 @@
 import 'package:easy_state/src/observable/observable.dart';
-import 'package:easy_state/src/observer_subscribe.dart';
+import 'package:easy_state/src/observer_listener.dart';
 import 'package:flutter/widgets.dart';
 
 class Observer extends StatefulWidget {
-  const Observer({
+  Observer({
     Key? key,
     required this.observables,
     required this.builder,
-  }) : super(key: key);
+  })  : assert(observables.isNotEmpty, 'Observable is empty'),
+        super(key: key);
 
-  final Widget Function(BuildContext context) builder;
+  final WidgetBuilder builder;
   final List<Observable> observables;
 
   @override
   State<StatefulWidget> createState() => _ObserverState();
 }
 
-class _ObserverState extends State<Observer> with ObserverSubscribe {
+class _ObserverState extends State<Observer> with ObserverListener {
   List<Observable> get _observables => widget.observables;
 
-  void _reaction() => setState(() {});
+  void _emptyCallback() {}
+
+  void _reaction() => setState(_emptyCallback);
 
   @override
   void initState() {
-    assert(_observables.isNotEmpty, 'Observable is empty');
-    addSubscriptions(widget.observables, _reaction);
+    addListeners(_observables, _reaction);
     super.initState();
   }
 
   @override
   void dispose() {
-    cancelSubscriptions();
+    removeListeners();
     super.dispose();
   }
 

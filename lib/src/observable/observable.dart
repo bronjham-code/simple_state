@@ -1,17 +1,13 @@
-import 'dart:async';
+import 'package:flutter/foundation.dart';
 
 class Observable<T> {
-  Observable(T value) : _value = value;
-  final _syncController = StreamController<bool>.broadcast();
-  T? _value;
+  Observable(T value) : _value = ValueNotifier<T>(value);
+  final ValueNotifier<T> _value;
 
-  T? get value => _value;
-  Stream<bool> get stream => _syncController.stream;
+  T get value => _value.value;
 
-  set value(T? value) {
-    _value = value;
-    _sync();
-  }
+  set value(T value) => _value.value = value;
 
-  void _sync() => _syncController.add(true);
+  void addListener(VoidCallback listener) => _value.addListener(listener);
+  void removeListener(VoidCallback listener) => _value.removeListener(listener);
 }

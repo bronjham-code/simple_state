@@ -34,7 +34,7 @@ class _ExampleViewState extends State<ExampleView> {
 
   @override
   void dispose() {
-    _whenReaction.cancelSubscriptions();
+    _whenReaction.removeListeners();
     super.dispose();
   }
 
@@ -55,7 +55,7 @@ class _ExampleViewState extends State<ExampleView> {
         icon: const Icon(Icons.add),
         label: const Text('Increment'),
         onPressed: () {
-          counter.value = counter.value! + 1;
+          counter.value = counter.value + 1;
         },
       ),
     );

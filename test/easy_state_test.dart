@@ -6,6 +6,6 @@ void main() {
   test('Change observable value', () {
     final observableList = ObservableList<int>([0]);
     observableList.add(1);
-    expect(observableList.value!.length, 2);
+    expect(observableList.value.length, 2);
   });
 }

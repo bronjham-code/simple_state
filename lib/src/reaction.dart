@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:easy_state/src/observable/observable.dart';
-import 'package:easy_state/src/observer_subscribe.dart';
+import 'package:easy_state/src/observer_listener.dart';
 
-class Reaction with ObserverSubscribe {
+class Reaction with ObserverListener {
   Reaction.when({
     required List<Observable> observables,
     required bool Function() condition,
@@ -11,7 +11,7 @@ class Reaction with ObserverSubscribe {
     bool fireImmediately = false,
   })  : _condition = condition,
         _reaction = reaction {
-    addSubscriptions(observables, _runReaction);
+    addListeners(observables, _runReaction);
     if (fireImmediately) {
       _runReaction();
     }
@@ -23,17 +23,17 @@ class Reaction with ObserverSubscribe {
     required void Function() reaction,
     bool fireImmediately = false,
   }) async {
-    final completer = Completer<bool>();
+    final completer = Completer<void>();
 
     final whenReaction = Reaction.when(
       observables: observables,
       condition: condition,
-      reaction: () => completer.complete(true),
+      reaction: () => completer.complete(),
       fireImmediately: fireImmediately,
     );
 
     await completer.future;
-    whenReaction.cancelSubscriptions();
+    whenReaction.removeListeners();
     reaction();
   }
 
