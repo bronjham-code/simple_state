@@ -90,6 +90,12 @@ class ObservableList<T> with ListMixin<T> implements Observable<List<T>> {
   }
 
   @override
+  void add(T element) {
+    _value.value.add(element);
+    _value.notifyListeners();
+  }
+
+  @override
   void addListener(VoidCallback listener) => _value.addListener(listener);
 
   @override

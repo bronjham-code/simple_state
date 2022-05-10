@@ -28,6 +28,7 @@ class _ObserverState extends State<Observer> with ObserverListener {
     if (_observables.isNotEmpty) {
       addListeners(_observables, _reaction);
     }
+
     super.initState();
   }
 
@@ -36,6 +37,7 @@ class _ObserverState extends State<Observer> with ObserverListener {
     if (_observables.isNotEmpty) {
       removeListeners();
     }
+
     super.dispose();
   }
 
