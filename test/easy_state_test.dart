@@ -4,8 +4,9 @@ import 'package:easy_state/easy_state.dart';
 
 void main() {
   test('Change observable value', () {
-    final observableList = ObservableList<int>([0]);
-    observableList.add(1);
-    expect(observableList.value.length, 2);
+    final observableList = Observable<List<int>>([0]);
+    observableList.value.add(33);
+    observableList.value.removeAt(0);
+    expect(observableList.value.length, 1);
   });
 }

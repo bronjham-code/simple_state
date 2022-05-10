@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:easy_state/src/observable/observable.dart';
 import 'package:easy_state/src/observer_listener.dart';
+import 'package:flutter/foundation.dart';
 
 class Reaction with ObserverListener {
   Reaction.when({
     required List<Observable> observables,
-    required bool Function() condition,
-    required void Function() reaction,
+    required ConditionCallback condition,
+    required VoidCallback reaction,
     bool fireImmediately = false,
   })  : _condition = condition,
         _reaction = reaction {
@@ -19,8 +20,8 @@ class Reaction with ObserverListener {
 
   static Future<void> asyncWhen({
     required List<Observable> observables,
-    required bool Function() condition,
-    required void Function() reaction,
+    required ConditionCallback condition,
+    required VoidCallback reaction,
     bool fireImmediately = false,
   }) async {
     final completer = Completer<void>();
@@ -37,8 +38,8 @@ class Reaction with ObserverListener {
     reaction();
   }
 
-  final bool Function() _condition;
-  final void Function() _reaction;
+  final ConditionCallback _condition;
+  final VoidCallback _reaction;
 
   void _runReaction() {
     if (_condition()) {
@@ -46,3 +47,5 @@ class Reaction with ObserverListener {
     }
   }
 }
+
+typedef ConditionCallback = bool Function();

@@ -3,12 +3,11 @@ import 'package:easy_state/src/observer_listener.dart';
 import 'package:flutter/widgets.dart';
 
 class Observer extends StatefulWidget {
-  Observer({
+  const Observer({
     Key? key,
     required this.observables,
     required this.builder,
-  })  : assert(observables.isNotEmpty, 'Observable is empty'),
-        super(key: key);
+  }) : super(key: key);
 
   final WidgetBuilder builder;
   final List<Observable> observables;
@@ -26,13 +25,17 @@ class _ObserverState extends State<Observer> with ObserverListener {
 
   @override
   void initState() {
-    addListeners(_observables, _reaction);
+    if (_observables.isNotEmpty) {
+      addListeners(_observables, _reaction);
+    }
     super.initState();
   }
 
   @override
   void dispose() {
-    removeListeners();
+    if (_observables.isNotEmpty) {
+      removeListeners();
+    }
     super.dispose();
   }
 
