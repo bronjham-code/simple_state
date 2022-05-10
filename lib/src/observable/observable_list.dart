@@ -33,47 +33,11 @@ class ObservableList<T> with ListMixin<T> implements Observable<List<T>> {
   set value(List<T> value) => _value.value = value;
 
   @override
-  void addListener(VoidCallback listener) => _value.addListener(listener);
-
-  @override
-  void removeListener(VoidCallback listener) => _value.removeListener(listener);
-
-  @override
   List<T> operator +(List<T> other) => _value.value = _value.value + other;
-
-  @override
-  void add(T element) {
-    _value.value.add(element);
-    _value.notifyListeners();
-  }
-
-  @override
-  void addAll(Iterable<T> iterable) {
-    _value.value.addAll(iterable);
-    _value.notifyListeners();
-  }
 
   @override
   void clear() {
     _value.value.clear();
-    _value.notifyListeners();
-  }
-
-  @override
-  void fillRange(int start, int end, [T? fill]) {
-    _value.value.fillRange(start, end, fill);
-    _value.notifyListeners();
-  }
-
-  @override
-  void insert(int index, T element) {
-    _value.value.insert(index, element);
-    _value.notifyListeners();
-  }
-
-  @override
-  void insertAll(int index, Iterable<T> iterable) {
-    _value.value.insertAll(index, iterable);
     _value.notifyListeners();
   }
 
@@ -114,42 +78,6 @@ class ObservableList<T> with ListMixin<T> implements Observable<List<T>> {
   }
 
   @override
-  void removeRange(int start, int end) {
-    _value.value.removeRange(start, end);
-    _value.notifyListeners();
-  }
-
-  @override
-  void removeWhere(bool Function(T element) test) {
-    _value.value.removeWhere(test);
-    _value.notifyListeners();
-  }
-
-  @override
-  void replaceRange(int start, int end, Iterable<T> newContents) {
-    _value.value.replaceRange(start, end, newContents);
-    _value.notifyListeners();
-  }
-
-  @override
-  void retainWhere(bool Function(T element) test) {
-    _value.value.retainWhere(test);
-    _value.notifyListeners();
-  }
-
-  @override
-  void setAll(int index, Iterable<T> iterable) {
-    _value.value.setAll(index, iterable);
-    _value.notifyListeners();
-  }
-
-  @override
-  void setRange(int start, int end, Iterable<T> iterable, [int skipCount = 0]) {
-    _value.value.setRange(start, end, iterable, skipCount);
-    _value.notifyListeners();
-  }
-
-  @override
   void shuffle([Random? random]) {
     _value.value.shuffle(random);
     _value.notifyListeners();
@@ -160,4 +88,10 @@ class ObservableList<T> with ListMixin<T> implements Observable<List<T>> {
     _value.value.sort();
     _value.notifyListeners();
   }
+
+  @override
+  void addListener(VoidCallback listener) => _value.addListener(listener);
+
+  @override
+  void removeListener(VoidCallback listener) => _value.removeListener(listener);
 }
