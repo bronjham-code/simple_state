@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 class ListNotifier<T> extends ChangeNotifier with ListMixin<T> {
   ListNotifier(List<T> value) : _value = value;
 
-  List<T> _value;
+  final List<T> _value;
 
   @override
   int get length => _value.length;
@@ -24,12 +24,7 @@ class ListNotifier<T> extends ChangeNotifier with ListMixin<T> {
   }
 
   @override
-  List<T> operator +(List<T> other) {
-    _value = _value + other;
-    notifyListeners();
-
-    return this;
-  }
+  ListNotifier<T> operator +(List<T> other) => ListNotifier<T>(_value + other);
 
   @override
   void clear() {
