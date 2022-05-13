@@ -1,15 +1,10 @@
-// ignore_for_file: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-
 import 'dart:collection';
-
 import 'package:flutter/foundation.dart';
 
-class MapNotifier<K, V> with MapMixin<K, V> implements ChangeNotifier {
+class MapNotifier<K, V> extends ChangeNotifier with MapMixin<K, V> {
   MapNotifier(Map<K, V> value) : _value = value;
 
   final Map<K, V> _value;
-
-  final _changeNotifier = ChangeNotifier();
 
   @override
   V? operator [](Object? key) => _value[key];
@@ -47,19 +42,4 @@ class MapNotifier<K, V> with MapMixin<K, V> implements ChangeNotifier {
     _value.addEntries(newEntries);
     notifyListeners();
   }
-
-  @override
-  void addListener(VoidCallback listener) => _changeNotifier.addListener(listener);
-
-  @override
-  void removeListener(VoidCallback listener) => _changeNotifier.removeListener(listener);
-
-  @override
-  void dispose() => _changeNotifier.dispose();
-
-  @override
-  bool get hasListeners => _changeNotifier.hasListeners;
-
-  @override
-  void notifyListeners() => _changeNotifier.notifyListeners();
 }

@@ -3,10 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 
-class ListNotifier<T> with ListMixin<T> implements ChangeNotifier {
+class ListNotifier<T> extends ChangeNotifier with ListMixin<T> {
   ListNotifier(List<T> value) : _value = value;
-
-  final _changeNotifier = ChangeNotifier();
 
   List<T> _value;
 
@@ -87,19 +85,4 @@ class ListNotifier<T> with ListMixin<T> implements ChangeNotifier {
     _value.add(element);
     notifyListeners();
   }
-
-  @override
-  void addListener(VoidCallback listener) => _changeNotifier.addListener(listener);
-
-  @override
-  void removeListener(VoidCallback listener) => _changeNotifier.removeListener(listener);
-
-  @override
-  void dispose() => _changeNotifier.dispose();
-
-  @override
-  bool get hasListeners => _changeNotifier.hasListeners;
-
-  @override
-  void notifyListeners() => _changeNotifier.notifyListeners();
 }
