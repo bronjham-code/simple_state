@@ -1,6 +1,7 @@
 ## Introduction
 #### What is SimpleState?
-It’s a Flutter navigation package, that makes it easy to connect your application's reactive data to the user interface.
+It’s a Flutter package, that makes it easy to connect your application's reactive data to the user interface.
+
 ## Installation
  ```yaml
 dependencies:
