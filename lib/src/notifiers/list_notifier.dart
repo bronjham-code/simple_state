@@ -24,7 +24,12 @@ class ListNotifier<T> extends ChangeNotifier with ListMixin<T> {
   }
 
   @override
-  List<T> operator +(List<T> other) => _value = _value + other;
+  List<T> operator +(List<T> other) {
+    _value = _value + other;
+    notifyListeners();
+
+    return this;
+  }
 
   @override
   void clear() {
