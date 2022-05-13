@@ -2,7 +2,7 @@ name: easy_state
 description: >-
   EasyState is a library that makes it easy to connect your application's reactive data to the user interface.
 version: 1.0.0
-homepage:
+homepage: https://github.com/bronjham-code/easy_state
 
 environment:
   sdk: '>=2.13.0 <3.0.0'
