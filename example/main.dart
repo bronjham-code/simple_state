@@ -11,17 +11,24 @@ class ExampleView extends StatefulWidget {
 class _ExampleViewState extends State<ExampleView> {
   final counter = ObservableList<int>([]);
 
-  late final _whenReaction = Reaction.when(
-    listenables: [counter],
-    condition: () => counter.length == 2,
-    reaction: _asyncWhen,
-  );
+  late final Reaction _whenReaction;
 
   Future<void> _asyncWhen() => Reaction.asyncWhen(
         listenables: [counter],
         condition: () => counter.length == 5,
         reaction: counter.clear,
       );
+
+  @override
+  void initState() {
+    _whenReaction = Reaction.when(
+      listenables: [counter],
+      condition: () => counter.length == 2,
+      reaction: _asyncWhen,
+    );
+
+    super.initState();
+  }
 
   @override
   void dispose() {

@@ -4,14 +4,14 @@ mixin ObserverListener {
   VoidCallback? _callback;
   final _listenables = <Listenable>[];
 
-  void addListeners(List<Listenable> observables, VoidCallback callback) {
+  void addListeners(List<Listenable> listenables, VoidCallback callback) {
     if (_listenables.isNotEmpty) {
       removeListeners();
     }
     _callback = callback;
-    _listenables.addAll(observables);
-    for (final observable in observables) {
-      observable.addListener(callback);
+    _listenables.addAll(listenables);
+    for (final listenable in listenables) {
+      listenable.addListener(callback);
     }
   }
 

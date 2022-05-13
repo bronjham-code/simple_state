@@ -1,39 +1,134 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
+## Introduction
+#### What is EasyState?
+It’s a Flutter navigation package, that makes it easy to connect your application's reactive data to the user interface.
+## Installation
+ ```yaml
+dependencies:
+  easy_state: [latest-version]
+``` 
 ## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+#### Simple observable object
+To work with the simplest objects, `Observable<T>` is used, it allows you to notify the observer when it changes, but will not work with collections or if the contents of the object change.
 
 ```dart
-const like = 'sample';
+class SimpleObservable extends StatelessWidget {
+  SimpleObservable({Key? key}) : super(key: key);
+
+  final _simpleObservable = Observable('Hello');
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          // Observer fires every time the listenables changes
+          child: Observer(
+            listenables: [_simpleObservable],
+            builder: (_) => Text(_simpleObservable.value),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.flutter_dash),
+          // Change observable value
+          onPressed: () => _simpleObservable.value += '\nWorld',
+        ),
+      ),
+    );
+  }
+}
+```
+#### Collections observable objects
+To work with collections, three classes are implemented `ObservableList<T>`, `ObservableMap<K,V>` and `ObservableSet<T>`, in which when adding / changing / deleting an element of the collection, the observer is notified.
+
+```dart
+class CollectionsObservable extends StatelessWidget {
+  CollectionsObservable({Key? key}) : super(key: key);
+
+  final _listObservable = ObservableList([0]);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          // Observer fires every time the listenables changes
+          child: Observer(
+            listenables: [_listObservable],
+            builder: (_) => ListView.builder(
+              itemCount: _listObservable.length,
+              itemBuilder: (_, i) => Text(_listObservable[i].toString()),
+            ),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.flutter_dash),
+          // Add item observable value
+          onPressed: () => _listObservable.add(_listObservable.length + 1),
+        ),
+      ),
+    );
+  }
+}
+```
+#### Reactions
+Reactions are essentially a subscription to changes `Observable<T>`, `ObservableList<T>`, `ObservableMap<K,V>` and `ObservableSet<T>` essentially any implementation of `Listenable` You can create a reaction Reaction.when it returns an object of type Reaction, removeListeners() must be called to remove the reaction. You can also create an asynchronous reaction Reaction.asyncWhen.
+
+```dart
+class ReactionObservable extends StatefulWidget {
+  const ReactionObservable({Key? key}) : super(key: key);
+
+  @override
+  _ReactionObservableState createState() => _ReactionObservableState();
+}
+
+class _ReactionObservableState extends State<ReactionObservable> {
+  late final _setObservable = ObservableSet<int>({});
+
+  late final Reaction _reaction;
+
+  @override
+  void initState() {
+    // Creating a reaction that clears the set when the length of the set is five elements
+    _reaction = Reaction.when(
+      listenables: [_setObservable],
+      condition: () => _setObservable.length == 5,
+      reaction: _setObservable.clear,
+    );
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // Deleting a reaction subscription
+    _reaction.removeListeners();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          // Observer fires every time the listenables changes
+          child: Observer(
+            listenables: [_setObservable],
+            builder: (_) => ListView.builder(
+              itemCount: _setObservable.length,
+              itemBuilder: (_, i) => Text(_setObservable.toList()[i].toString()),
+            ),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.flutter_dash),
+          // Add item observable value
+          onPressed: () => _setObservable.add(_setObservable.length + 1),
+        ),
+      ),
+    );
+  }
+}
 ```
 
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+See also an example using `/example` folder
