@@ -1,4 +1,4 @@
-import 'package:easy_state/easy_state.dart';
+import 'package:simple_state/simple_state.dart';
 import 'package:flutter/material.dart';
 
 class ExampleView extends StatefulWidget {

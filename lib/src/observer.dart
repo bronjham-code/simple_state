@@ -1,5 +1,5 @@
-import 'package:easy_state/src/observable/observable.dart';
-import 'package:easy_state/src/observer_listener.dart';
+import 'package:simple_state/src/observable/observable.dart';
+import 'package:simple_state/src/observer_listener.dart';
 import 'package:flutter/widgets.dart';
 
 class Observer extends StatefulWidget {

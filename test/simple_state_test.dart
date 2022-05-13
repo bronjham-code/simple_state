@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:easy_state/easy_state.dart';
+import 'package:simple_state/simple_state.dart';
 
 void main() {
   test('Change observable value', () {

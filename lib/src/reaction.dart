@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:easy_state/src/observer_listener.dart';
+import 'package:simple_state/src/observer_listener.dart';
 import 'package:flutter/foundation.dart';
 
 class Reaction with ObserverListener {

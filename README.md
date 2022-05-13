@@ -1,10 +1,10 @@
 ## Introduction
-#### What is EasyState?
+#### What is SimpleState?
 It’s a Flutter navigation package, that makes it easy to connect your application's reactive data to the user interface.
 ## Installation
  ```yaml
 dependencies:
-  easy_state: [latest-version]
+  simple_state: [latest-version]
 ``` 
 ## Usage
 #### Simple observable object

@@ -1,4 +1,4 @@
-library easy_state;
+library simple_state;
 
 export 'src/reaction.dart';
 export 'src/observer.dart';
