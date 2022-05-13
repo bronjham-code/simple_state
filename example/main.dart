@@ -11,16 +11,16 @@ class ExampleView extends StatefulWidget {
 class _ExampleViewState extends State<ExampleView> {
   final counter = ObservableList<int>([]);
 
-  late final Reaction _whenReaction = Reaction.when(
-    observables: [counter],
-    condition: () => counter.value.length == 2,
+  late final _whenReaction = Reaction.when(
+    listenables: [counter],
+    condition: () => counter.length == 2,
     reaction: _asyncWhen,
   );
 
   Future<void> _asyncWhen() => Reaction.asyncWhen(
-        observables: [counter],
-        condition: () => counter.value.length == 5,
-        reaction: counter.value.clear,
+        listenables: [counter],
+        condition: () => counter.length == 5,
+        reaction: counter.clear,
       );
 
   @override
@@ -35,9 +35,9 @@ class _ExampleViewState extends State<ExampleView> {
     return Scaffold(
       body: Center(
         child: Observer(
-          observables: [counter],
+          listenables: [counter],
           builder: (_) => Text(
-            counter.value.toString(),
+            counter.toString(),
             style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
           ),
         ),
@@ -46,7 +46,7 @@ class _ExampleViewState extends State<ExampleView> {
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.add),
         label: const Text('Increment'),
-        onPressed: () => counter.value.add(counter.value.length + 1),
+        onPressed: () => counter.add(counter.length + 1),
       ),
     );
   }

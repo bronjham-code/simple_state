@@ -5,19 +5,19 @@ import 'package:flutter/widgets.dart';
 class Observer extends StatefulWidget {
   const Observer({
     Key? key,
-    required this.observables,
+    required this.listenables,
     required this.builder,
   }) : super(key: key);
 
   final WidgetBuilder builder;
-  final List<Observable> observables;
+  final List<Listenable> listenables;
 
   @override
   State<StatefulWidget> createState() => _ObserverState();
 }
 
 class _ObserverState extends State<Observer> with ObserverListener {
-  List<Observable> get _observables => widget.observables;
+  List<Listenable> get _listenables => widget.listenables;
 
   void _emptyCallback() {}
 
@@ -25,8 +25,8 @@ class _ObserverState extends State<Observer> with ObserverListener {
 
   @override
   void initState() {
-    if (_observables.isNotEmpty) {
-      addListeners(_observables, _reaction);
+    if (_listenables.isNotEmpty) {
+      addListeners(_listenables, _reaction);
     }
 
     super.initState();
@@ -34,7 +34,7 @@ class _ObserverState extends State<Observer> with ObserverListener {
 
   @override
   void dispose() {
-    if (_observables.isNotEmpty) {
+    if (_listenables.isNotEmpty) {
       removeListeners();
     }
 

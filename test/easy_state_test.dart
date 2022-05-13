@@ -12,25 +12,25 @@ void main() {
 
   test('Change observable list value', () {
     final observableList = ObservableList<int>([]);
-    expect(observableList.value.length, 0);
-    observableList.value.add(33);
-    expect(observableList.value.length, 1);
-    expect(observableList.value.last, 33);
+    expect(observableList.length, 0);
+    observableList.add(33);
+    expect(observableList.length, 1);
+    expect(observableList.last, 33);
   });
 
   test('Change observable set value', () {
     final observableList = ObservableSet<int>({});
-    expect(observableList.value.length, 0);
-    observableList.value.add(33);
-    expect(observableList.value.length, 1);
-    expect(observableList.value.last, 33);
+    expect(observableList.length, 0);
+    observableList.add(33);
+    expect(observableList.length, 1);
+    expect(observableList.last, 33);
   });
 
   test('Change observable map value', () {
     final observableList = ObservableMap<int, int?>({});
-    expect(observableList.value.length, 0);
-    observableList.value.putIfAbsent(33, () => 34);
-    expect(observableList.value.length, 1);
-    expect(observableList.value[33], 34);
+    expect(observableList.length, 0);
+    observableList.putIfAbsent(33, () => 34);
+    expect(observableList.length, 1);
+    expect(observableList[33], 34);
   });
 }

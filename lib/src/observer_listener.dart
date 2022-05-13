@@ -1,16 +1,15 @@
-import 'package:easy_state/src/observable/observable.dart';
 import 'package:flutter/foundation.dart';
 
 mixin ObserverListener {
   VoidCallback? _callback;
-  final _observables = <Observable>[];
+  final _listenables = <Listenable>[];
 
-  void addListeners(List<Observable> observables, VoidCallback callback) {
-    if (_observables.isNotEmpty) {
+  void addListeners(List<Listenable> observables, VoidCallback callback) {
+    if (_listenables.isNotEmpty) {
       removeListeners();
     }
     _callback = callback;
-    _observables.addAll(observables);
+    _listenables.addAll(observables);
     for (final observable in observables) {
       observable.addListener(callback);
     }
@@ -18,10 +17,10 @@ mixin ObserverListener {
 
   void removeListeners() {
     if (_callback != null) {
-      for (final observable in _observables) {
-        observable.removeListener(_callback!);
+      for (final listenable in _listenables) {
+        listenable.removeListener(_callback!);
       }
     }
-    _observables.clear();
+    _listenables.clear();
   }
 }
