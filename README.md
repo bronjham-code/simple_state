@@ -70,6 +70,51 @@ class CollectionsObservable extends StatelessWidget {
   }
 }
 ```
+
+#### Custom observable object
+You can also implement complex objects that can notify the observer of a change.
+
+```dart
+class CustomTitleObservable extends ChangeNotifier {
+  CustomTitleObservable([String? title]) : _title = title;
+
+  String? _title;
+
+  String get title => _title ?? '';
+
+  set title(String value) {
+    _title = value;
+
+    notifyListeners();
+  }
+}
+
+class CustomObservable extends StatelessWidget {
+  CustomObservable({Key? key}) : super(key: key);
+
+  late final _customObservable = CustomTitleObservable('#');
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          // Observer fires every time the listenables changes
+          child: Observer(
+            listenables: [_customObservable],
+            builder: (_) => Text(_customObservable.title),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.flutter_dash),
+          // Add item observable value
+          onPressed: () => _customObservable.title += '!',
+        ),
+      ),
+    );
+  }
+}
+```
 #### Reactions
 Reactions are essentially a subscription to changes `Observable<T>`, `ObservableList<T>`, `ObservableMap<K,V>` and `ObservableSet<T>` essentially any implementation of `Listenable` You can create a reaction Reaction.when it returns an object of type Reaction, removeListeners() must be called to remove the reaction. You can also create an asynchronous reaction Reaction.asyncWhen.
 
