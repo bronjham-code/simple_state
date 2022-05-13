@@ -1,6 +1,5 @@
 import 'dart:collection';
 import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 
 class ObservableList<T> extends ChangeNotifier with ListMixin<T> {
