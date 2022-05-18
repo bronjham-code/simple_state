@@ -1,3 +1,7 @@
+## [1.1.1]
+
+- Update example
+
 ## [1.1.0]
 
 - Refinement of examples.

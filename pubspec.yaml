@@ -1,7 +1,7 @@
 name: simple_state
 description: >-
   SimpleState is a library that makes it easy to connect your application's reactive data to the user interface.
-version: 1.1.0
+version: 1.1.1
 homepage: https://github.com/bronjham-code/simple_state
 
 environment:
