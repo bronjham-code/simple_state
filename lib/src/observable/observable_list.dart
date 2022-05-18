@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 
 class ObservableList<T> extends ChangeNotifier with ListMixin<T> {
-  ObservableList(List<T> value) : _value = value;
+  ObservableList([List<T>? value]) : _value = value ?? [];
 
   final List<T> _value;
 
@@ -11,7 +11,10 @@ class ObservableList<T> extends ChangeNotifier with ListMixin<T> {
   int get length => _value.length;
 
   @override
-  set length(int newLength) => _value.length = newLength;
+  set length(int newLength) {
+    _value.length = newLength;
+    notifyListeners();
+  }
 
   @override
   T operator [](int index) => _value[index];
@@ -23,7 +26,8 @@ class ObservableList<T> extends ChangeNotifier with ListMixin<T> {
   }
 
   @override
-  ObservableList<T> operator +(List<T> other) => ObservableList<T>(_value + other);
+  ObservableList<T> operator +(List<T> other) =>
+      ObservableList<T>(_value + other);
 
   @override
   void clear() {

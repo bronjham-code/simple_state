@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:simple_state/src/observer_listener.dart';
+import 'package:simple_state/src/observer_listener_mixin.dart';
 import 'package:flutter/foundation.dart';
 
-class Reaction with ObserverListener {
+class Reaction with ObserverListenerMixin {
   Reaction.when({
     required List<Listenable> listenables,
     required ConditionCallback condition,
@@ -23,7 +23,7 @@ class Reaction with ObserverListener {
   static Future<void> asyncWhen({
     required List<Listenable> listenables,
     required ConditionCallback condition,
-    required VoidCallback reaction,
+    required ReactionCallback reaction,
     bool fireImmediately = false,
   }) async {
     final completer = Completer<void>();
@@ -37,7 +37,7 @@ class Reaction with ObserverListener {
 
     await completer.future;
     whenReaction.removeListeners();
-    reaction();
+    await reaction();
   }
 
   void _runReaction() {
@@ -48,3 +48,4 @@ class Reaction with ObserverListener {
 }
 
 typedef ConditionCallback = bool Function();
+typedef ReactionCallback = FutureOr<void> Function();

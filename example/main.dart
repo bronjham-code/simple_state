@@ -1,6 +1,12 @@
 import 'package:simple_state/simple_state.dart';
 import 'package:flutter/material.dart';
 
+void main() => runApp(
+      const MaterialApp(
+        home: ExampleView(),
+      ),
+    );
+
 class ExampleView extends StatefulWidget {
   const ExampleView({Key? key}) : super(key: key);
 
@@ -9,7 +15,8 @@ class ExampleView extends StatefulWidget {
 }
 
 class _ExampleViewState extends State<ExampleView> {
-  final counter = ObservableList<int>([]);
+  final counter = ObservableList<int>();
+  final observ = Observable('value');
 
   late final Reaction _whenReaction;
 

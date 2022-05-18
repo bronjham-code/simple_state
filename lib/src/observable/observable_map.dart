@@ -2,7 +2,7 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 
 class ObservableMap<K, V> extends ChangeNotifier with MapMixin<K, V> {
-  ObservableMap(Map<K, V> value) : _value = value;
+  ObservableMap([Map<K, V>? value]) : _value = value ?? {};
 
   final Map<K, V> _value;
 

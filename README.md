@@ -12,6 +12,15 @@ dependencies:
 To work with the simplest objects, `Observable<T>` is used, it allows you to notify the observer when it changes, but will not work with collections or if the contents of the object change.
 
 ```dart
+import 'package:simple_state/simple_state.dart';
+import 'package:flutter/material.dart';
+
+void main() => runApp(
+      MaterialApp(
+        home: SimpleObservable(),
+      ),
+    );
+
 class SimpleObservable extends StatelessWidget {
   SimpleObservable({Key? key}) : super(key: key);
 
@@ -42,6 +51,15 @@ class SimpleObservable extends StatelessWidget {
 To work with collections, three classes are implemented `ObservableList<T>`, `ObservableMap<K,V>` and `ObservableSet<T>`, in which when adding / changing / deleting an element of the collection, the observer is notified.
 
 ```dart
+import 'package:simple_state/simple_state.dart';
+import 'package:flutter/material.dart';
+
+void main() => runApp(
+      MaterialApp(
+        home: CollectionsObservable(),
+      ),
+    );
+
 class CollectionsObservable extends StatelessWidget {
   CollectionsObservable({Key? key}) : super(key: key);
 
@@ -64,7 +82,7 @@ class CollectionsObservable extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.flutter_dash),
           // Add item observable value
-          onPressed: () => _listObservable.add(_listObservable.length + 1),
+          onPressed: () => _listObservable.add(_listObservable.length),
         ),
       ),
     );
@@ -76,6 +94,15 @@ class CollectionsObservable extends StatelessWidget {
 You can also implement complex objects that can notify the observer of a change.
 
 ```dart
+import 'package:simple_state/simple_state.dart';
+import 'package:flutter/material.dart';
+
+void main() => runApp(
+      MaterialApp(
+        home: CustomObservable(),
+      ),
+    );
+
 class CustomTitleObservable extends ChangeNotifier {
   CustomTitleObservable([String? title]) : _title = title;
 
@@ -120,6 +147,15 @@ class CustomObservable extends StatelessWidget {
 Reactions are essentially a subscription to changes `Observable<T>`, `ObservableList<T>`, `ObservableMap<K,V>` and `ObservableSet<T>` essentially any implementation of `Listenable` You can create a reaction Reaction.when it returns an object of type Reaction, removeListeners() must be called to remove the reaction. You can also create an asynchronous reaction Reaction.asyncWhen.
 
 ```dart
+import 'package:simple_state/simple_state.dart';
+import 'package:flutter/material.dart';
+
+void main() => runApp(
+      const MaterialApp(
+        home: ReactionObservable(),
+      ),
+    );
+
 class ReactionObservable extends StatefulWidget {
   const ReactionObservable({Key? key}) : super(key: key);
 
@@ -128,7 +164,7 @@ class ReactionObservable extends StatefulWidget {
 }
 
 class _ReactionObservableState extends State<ReactionObservable> {
-  late final _setObservable = ObservableSet<int>({});
+  late final _exampleMap = ObservableMap<int, String>({});
 
   late final Reaction _reaction;
 
@@ -136,9 +172,9 @@ class _ReactionObservableState extends State<ReactionObservable> {
   void initState() {
     // Creating a reaction that clears the set when the length of the set is five elements
     _reaction = Reaction.when(
-      listenables: [_setObservable],
-      condition: () => _setObservable.length == 5,
-      reaction: _setObservable.clear,
+      listenables: [_exampleMap],
+      condition: () => _exampleMap.length == 5,
+      reaction: _exampleMap.clear,
     );
 
     super.initState();
@@ -159,22 +195,23 @@ class _ReactionObservableState extends State<ReactionObservable> {
         body: Center(
           // Observer fires every time the listenables changes
           child: Observer(
-            listenables: [_setObservable],
+            listenables: [_exampleMap],
             builder: (_) => ListView.builder(
-              itemCount: _setObservable.length,
-              itemBuilder: (_, i) => Text(_setObservable.toList()[i].toString()),
+              itemCount: _exampleMap.length,
+              itemBuilder: (_, i) => Text(_exampleMap[i] ?? ''),
             ),
           ),
         ),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.flutter_dash),
           // Add item observable value
-          onPressed: () => _setObservable.add(_setObservable.length + 1),
+          onPressed: () => _exampleMap[_exampleMap.length] = 'Item ${_exampleMap.length}',
         ),
       ),
     );
   }
 }
+
 ```
 
 See also an example using `/example` folder

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-mixin ObserverListener {
+mixin ObserverListenerMixin {
   VoidCallback? _callback;
   final _listenables = <Listenable>[];
 

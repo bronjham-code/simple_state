@@ -1,4 +1,4 @@
-import 'package:simple_state/src/observer_listener.dart';
+import 'package:simple_state/src/observer_listener_mixin.dart';
 import 'package:flutter/widgets.dart';
 
 class Observer extends StatefulWidget {
@@ -15,7 +15,7 @@ class Observer extends StatefulWidget {
   State<StatefulWidget> createState() => _ObserverState();
 }
 
-class _ObserverState extends State<Observer> with ObserverListener {
+class _ObserverState extends State<Observer> with ObserverListenerMixin {
   List<Listenable> get _listenables => widget.listenables;
 
   void _emptyCallback() {}
