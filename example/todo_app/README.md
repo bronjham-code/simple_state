@@ -1,6 +1,6 @@
 # simple_state_todo_example
 
-![image description](example/todo_app/images/todo-app-example.png)
+![image description](images/todo-app-example.png)
 
 Simple todo app example of using simple state package.
 
