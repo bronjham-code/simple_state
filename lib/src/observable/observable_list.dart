@@ -28,7 +28,8 @@ class ObservableList<T> extends ChangeNotifier with ListMixin<T> {
   }
 
   @override
-  ObservableList<T> operator +(List<T> other) => ObservableList<T>(_value + other);
+  ObservableList<T> operator +(List<T> other) =>
+      ObservableList<T>(_value + other);
 
   @override
   void clear() {

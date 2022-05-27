@@ -26,4 +26,5 @@ class ObserverPreferredSize extends PreferredSize {
 ///
 /// It is also worth paying attention to the fact that the first call to the builder function
 /// will return a null context, this is necessary to get the sizes.
-typedef PreferredSizeWidgetBuilder = PreferredSizeWidget Function(BuildContext? context);
+typedef PreferredSizeWidgetBuilder = PreferredSizeWidget Function(
+    BuildContext? context);
