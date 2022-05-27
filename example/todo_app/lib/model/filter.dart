@@ -3,9 +3,13 @@ import 'package:simple_state_todo/model/filter_type.dart';
 
 class Filter<T> {
   late final String name;
+
   final FilterType type;
+
   final ObservableList<T> _items;
+
   final bool Function(T)? _filter;
+
   late final ObservableList<T> filteredItems;
 
   Filter(this.type, this._items, this._filter) {

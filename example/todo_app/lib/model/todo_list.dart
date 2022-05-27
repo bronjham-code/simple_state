@@ -19,9 +19,13 @@ class TodoList {
   ]);
 
   late final Filter<Todo> all;
+
   late final Filter<Todo> pending;
+
   late final Filter<Todo> completed;
+
   late final List<Filter<Todo>> filters;
+
   late final Observable<Filter<Todo>> selectedFilter;
 
   TodoList() {
