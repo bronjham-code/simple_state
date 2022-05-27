@@ -8,7 +8,7 @@ void main() => runApp(
     );
 
 class ExampleView extends StatefulWidget {
-  const ExampleView({Key? key}) : super(key: key);
+  const ExampleView({super.key});
 
   @override
   State<StatefulWidget> createState() => _ExampleViewState();
@@ -45,6 +45,14 @@ class _ExampleViewState extends State<ExampleView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: ObserverPreferredSize(
+        listenables: [counter],
+        builder: (_) => AppBar(
+          title: Text(
+            counter.length.toString(),
+          ),
+        ),
+      ),
       body: Center(
         child: Observer(
           listenables: [counter],
