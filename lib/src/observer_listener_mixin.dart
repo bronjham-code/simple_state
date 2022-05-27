@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+/// A mixin that allows you to add and remove listeners.
 mixin ObserverListenerMixin {
   VoidCallback? _callback;
   final _listenables = <Listenable>[];

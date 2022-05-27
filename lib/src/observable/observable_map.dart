@@ -1,7 +1,10 @@
 import 'dart:collection';
 import 'package:flutter/foundation.dart';
 
+/// A observable collection of key/value pairs, from which you retrieve a value
+/// using its associated key.
 class ObservableMap<K, V> extends ChangeNotifier with MapMixin<K, V> {
+  /// Creates an observable [LinkedHashMap].
   ObservableMap([Map<K, V>? value]) : _value = value ?? {};
 
   final Map<K, V> _value;
