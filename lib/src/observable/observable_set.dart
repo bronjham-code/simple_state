@@ -1,7 +1,9 @@
 import 'dart:collection';
 import 'package:flutter/foundation.dart';
 
+/// A observable collection of objects in which each object can occur only once.
 class ObservableSet<T> extends ChangeNotifier with SetMixin<T> {
+  /// Creates an observable [Set].
   ObservableSet([Set<T>? value]) : _value = value ?? {};
 
   final Set<T> _value;

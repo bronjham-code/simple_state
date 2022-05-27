@@ -1,14 +1,17 @@
 import 'package:simple_state/src/observer_listener_mixin.dart';
 import 'package:flutter/widgets.dart';
 
+/// The observer widget is rebuilt every time the listener is called.
 class Observer extends StatefulWidget {
+  /// Creates an observable widget.
   const Observer({
-    Key? key,
+    super.key,
     required this.listenables,
     required this.builder,
-  }) : super(key: key);
+  });
 
   final WidgetBuilder builder;
+
   final List<Listenable> listenables;
 
   @override

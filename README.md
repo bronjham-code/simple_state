@@ -22,7 +22,7 @@ void main() => runApp(
     );
 
 class SimpleObservable extends StatelessWidget {
-  SimpleObservable({Key? key}) : super(key: key);
+  SimpleObservable({super.key});
 
   final _simpleObservable = Observable('Hello');
 
@@ -61,7 +61,7 @@ void main() => runApp(
     );
 
 class CollectionsObservable extends StatelessWidget {
-  CollectionsObservable({Key? key}) : super(key: key);
+  CollectionsObservable({super.key});
 
   final _listObservable = ObservableList([0]);
 
@@ -118,7 +118,7 @@ class CustomTitleObservable extends ChangeNotifier {
 }
 
 class CustomObservable extends StatelessWidget {
-  CustomObservable({Key? key}) : super(key: key);
+  CustomObservable({super.key});
 
   late final _customObservable = CustomTitleObservable('#');
 
@@ -157,7 +157,7 @@ void main() => runApp(
     );
 
 class ReactionObservable extends StatefulWidget {
-  const ReactionObservable({Key? key}) : super(key: key);
+  const ReactionObservable({super.key});
 
   @override
   _ReactionObservableState createState() => _ReactionObservableState();
