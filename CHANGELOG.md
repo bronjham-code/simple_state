@@ -1,3 +1,10 @@
+## [1.1.2]
+
+- Added Example `todo_app`.
+- Added `ObserverPreferredSize` widget.
+- Added documentation comments.
+- Bump min dart version to 2.17.0.
+
 ## [1.1.1]
 
 - Update example
