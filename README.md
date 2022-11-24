@@ -144,7 +144,7 @@ class CustomObservable extends StatelessWidget {
 }
 ```
 #### Reactions
-Reactions are essentially a subscription to changes `Observable<T>`, `ObservableList<T>`, `ObservableMap<K,V>` and `ObservableSet<T>` essentially any implementation of `Listenable` You can create a reaction Reaction.when it returns an object of type Reaction, removeListeners() must be called to remove the reaction. You can also create an asynchronous reaction Reaction.asyncWhen.
+Reactions are essentially a subscription to changes `Observable<T>`, `ObservableList<T>`, `ObservableMap<K,V>` and `ObservableSet<T>` essentially any implementation of `Listenable` You can create a reaction Reaction.when it returns an object of type Reaction, removeListeners() must be called to remove the reaction. You can also create an asynchronous reaction Reaction.asyncWhen. You can also use reactions in the widget tree using the widget `ReactionWidget`.
 
 ```dart
 import 'package:simple_state/simple_state.dart';

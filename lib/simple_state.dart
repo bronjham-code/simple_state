@@ -1,6 +1,7 @@
 library simple_state;
 
 export 'src/reaction.dart';
+export 'src/reaction_widget.dart';
 export 'src/observer.dart';
 export 'src/observer_preferred_size.dart';
 export 'src/extensions.dart';
