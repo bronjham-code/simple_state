@@ -1,3 +1,7 @@
+## [1.2.2]
+
+- Added `ReactionWidget`.
+
 ## [1.1.2]
 
 - Added Example `todo_app`.
