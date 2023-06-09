@@ -7,21 +7,30 @@ class ReactionBuilder<T> extends StatefulWidget {
   const ReactionBuilder({
     super.key,
     required this.child,
-    required this.reaction,
+    required this.create,
   });
 
   final Widget child;
 
-  final Reaction<T> reaction;
+  final ReactionCreateCallback<T> create;
 
   @override
   State<ReactionBuilder<T>> createState() => _ReactionBuilderState<T>();
 }
 
 class _ReactionBuilderState<T> extends State<ReactionBuilder<T>> {
+  late final Reaction<T> _reaction;
+
+  @override
+  void initState() {
+    _reaction = widget.create(context);
+
+    super.initState();
+  }
+
   @override
   void dispose() {
-    widget.reaction.removeListeners();
+    _reaction.removeListeners();
 
     super.dispose();
   }
@@ -31,3 +40,6 @@ class _ReactionBuilderState<T> extends State<ReactionBuilder<T>> {
     return widget.child;
   }
 }
+
+/// Signature of reaction creater
+typedef ReactionCreateCallback<T> = Reaction<T> Function(BuildContext context);

@@ -35,7 +35,7 @@ class _ExampleViewState extends State<ExampleView> {
   @override
   Widget build(BuildContext context) {
     return ReactionBuilder(
-      reaction: Reaction.when(
+      create: (context) => Reaction.when(
         pointer: () => _counter.value.length,
         reaction: (_) => _asyncWhen(),
         when: (current, previous) => current == 2,
