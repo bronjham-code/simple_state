@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/widgets.dart';
 import 'package:simple_state/src/reaction.dart';
 
@@ -33,6 +31,3 @@ class _ReactionBuilderState<T> extends State<ReactionBuilder<T>> {
     return widget.child;
   }
 }
-
-/// Signature of widget callbacks or asynchronous callbacks that accept a context and return no data.
-typedef ReactionWidgetCallback<T> = FutureOr<void> Function(T);
