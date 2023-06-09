@@ -20,19 +20,10 @@ class _ExampleViewState extends State<ExampleView> {
   late final Reaction _whenReaction;
 
   Future<void> _asyncWhen() => Reaction.asyncWhen(
-        condition: () => _counter.value.length == 5,
-        reaction: _counter.value.clear,
+        pointer: () => _counter.value.length,
+        reaction: (_) => _counter.value.clear(),
+        when: (current, previous) => current == 5,
       );
-
-  @override
-  void initState() {
-    _whenReaction = _counter.when(
-      (observable) => observable.value.length == 2,
-      _asyncWhen,
-    );
-
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -43,27 +34,34 @@ class _ExampleViewState extends State<ExampleView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: ObserverPreferredSize(
-        builder: (_) => AppBar(
-          title: Text(
-            _counter.value.length.toString(),
+    return ReactionBuilder(
+      reaction: Reaction.when(
+        pointer: () => _counter.value.length,
+        reaction: (_) => _asyncWhen(),
+        when: (current, previous) => current == 2,
+      ),
+      child: Scaffold(
+        appBar: ObserverPreferredSize(
+          builder: (_) => AppBar(
+            title: Text(
+              _counter.value.length.toString(),
+            ),
           ),
         ),
-      ),
-      body: Center(
-        child: Observer(
-          builder: (_) => Text(
-            _counter.value.toString(),
-            style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+        body: Center(
+          child: Observer(
+            builder: (_) => Text(
+              _counter.value.toString(),
+              style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        icon: const Icon(Icons.add),
-        label: const Text('Add Item'),
-        onPressed: () => _counter.value.add(_counter.value.length + 1),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: FloatingActionButton.extended(
+          icon: const Icon(Icons.add),
+          label: const Text('Add Item'),
+          onPressed: () => _counter.value.add(_counter.value.length + 1),
+        ),
       ),
     );
   }

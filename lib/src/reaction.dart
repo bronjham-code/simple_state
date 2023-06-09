@@ -4,46 +4,52 @@ import 'package:flutter/foundation.dart';
 import 'package:simple_state/src/observer_listener_mixin.dart';
 import 'package:simple_state/src/store.dart';
 
-/// Reactions are essentially a subscription to changes `Observable<T>`, `ObservableList<T>`, `ObservableMap<K,V>`
-/// and `ObservableSet<T>` essentially any implementation of `Listenable`.
-class Reaction with ObserverListenerMixin {
+/// Reactions are essentially a subscription to changes `ObservableBase<T>` essentially any implementation of `Listenable`.
+class Reaction<T> with ObserverListenerMixin {
   /// Creates a new reaction.
   Reaction.when({
-    required ConditionCallback condition,
-    required VoidCallback reaction,
+    required PointerCallback<T> pointer,
+    required ReactionCallback<T> reaction,
+    ReactionWhenCallback<T>? when,
     bool fireImmediately = false,
-  })  : _condition = condition,
+  })  : _when = when,
+        _pointer = pointer,
         _reaction = reaction {
     Store.instance.beginBuild(_listen);
-    _condition();
+    _pointer();
     Store.instance.endBuild(_listen);
 
     if (fireImmediately) {
       _runReaction();
     }
   }
+  T? _previousValue;
 
-  final ConditionCallback _condition;
+  final PointerCallback<T> _pointer;
 
-  final VoidCallback _reaction;
+  final ReactionCallback<T> _reaction;
+
+  final ReactionWhenCallback<T>? _when;
 
   /// Creates a async reaction.
-  static Future<void> asyncWhen({
-    required ConditionCallback condition,
-    required ReactionCallback reaction,
+  static Future<void> asyncWhen<T>({
+    required PointerCallback<T> pointer,
+    required ReactionCallback<T> reaction,
+    ReactionWhenCallback<T>? when,
     bool fireImmediately = false,
   }) async {
     final completer = Completer<void>();
 
     final whenReaction = Reaction.when(
-      condition: condition,
+      when: when,
+      pointer: pointer,
       reaction: completer.complete,
       fireImmediately: fireImmediately,
     );
 
     await completer.future;
     whenReaction.removeListeners();
-    await reaction();
+    await reaction(pointer());
   }
 
   void _listen(Listenable listenable) {
@@ -51,14 +57,26 @@ class Reaction with ObserverListenerMixin {
   }
 
   void _runReaction() {
-    if (_condition()) {
-      _reaction();
+    final when = _when;
+    final currentValue = _pointer();
+
+    if (when != null &&
+        !when(
+          currentValue,
+          _previousValue,
+        )) {
+      return;
     }
+    _previousValue = currentValue;
+    _reaction(currentValue);
   }
 }
 
-/// Signature of the conditions returning true
-typedef ConditionCallback = bool Function();
+/// Signature of the pointer
+typedef PointerCallback<T> = T Function();
+
+/// Signature of the pointer
+typedef ReactionWhenCallback<T> = bool Function(T current, T? previous);
 
 /// Signature of callbacks or async callbacks that take no arguments and return no data.
-typedef ReactionCallback = FutureOr<void> Function();
+typedef ReactionCallback<T> = FutureOr<void> Function(T);
