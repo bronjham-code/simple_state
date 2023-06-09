@@ -5,7 +5,7 @@ version: 1.2.2
 homepage: https://github.com/bronjham-code/simple_state
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=2.17.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
