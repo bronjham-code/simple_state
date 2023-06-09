@@ -33,7 +33,6 @@ class SimpleObservable extends StatelessWidget {
         body: Center(
           // Observer fires every time the listenables changes
           child: Observer(
-            listenables: [_simpleObservable],
             builder: (_) => Text(_simpleObservable.value),
           ),
         ),
@@ -72,7 +71,6 @@ class CollectionsObservable extends StatelessWidget {
         body: Center(
           // Observer fires every time the listenables changes
           child: Observer(
-            listenables: [_listObservable],
             builder: (_) => ListView.builder(
               itemCount: _listObservable.length,
               itemBuilder: (_, i) => Text(_listObservable[i].toString()),
@@ -129,7 +127,6 @@ class CustomObservable extends StatelessWidget {
         body: Center(
           // Observer fires every time the listenables changes
           child: Observer(
-            listenables: [_customObservable],
             builder: (_) => Text(_customObservable.title),
           ),
         ),
@@ -172,7 +169,6 @@ class _ReactionObservableState extends State<ReactionObservable> {
   void initState() {
     // Creating a reaction that clears the set when the length of the set is five elements
     _reaction = Reaction.when(
-      listenables: [_exampleMap],
       condition: () => _exampleMap.length == 5,
       reaction: _exampleMap.clear,
     );
@@ -195,7 +191,6 @@ class _ReactionObservableState extends State<ReactionObservable> {
         body: Center(
           // Observer fires every time the listenables changes
           child: Observer(
-            listenables: [_exampleMap],
             builder: (_) => ListView.builder(
               itemCount: _exampleMap.length,
               itemBuilder: (_, i) => Text(_exampleMap[i] ?? ''),
