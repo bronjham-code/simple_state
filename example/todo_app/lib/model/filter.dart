@@ -22,11 +22,11 @@ class Filter<T> {
     }
   }
 
-  Iterable<T> get _filtered => _items.where(_filter!);
+  Iterable<T> get _filtered => _items.value.where(_filter!);
 
   void _update() {
-    filteredItems.clear();
-    filteredItems.addAll(_filtered);
+    filteredItems.value.clear();
+    filteredItems.value.addAll(_filtered);
   }
 
   void dispose() {

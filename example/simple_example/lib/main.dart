@@ -15,20 +15,19 @@ class ExampleView extends StatefulWidget {
 }
 
 class _ExampleViewState extends State<ExampleView> {
-  final counter = ObservableList<int>();
+  final _counter = ObservableList<int>();
 
   late final Reaction _whenReaction;
 
   Future<void> _asyncWhen() => Reaction.asyncWhen(
-        listenables: [counter],
-        condition: () => counter.length == 5,
-        reaction: counter.clear,
+        condition: () => _counter.value.length == 5,
+        reaction: _counter.value.clear,
       );
 
   @override
   void initState() {
-    _whenReaction = counter.when(
-      (observable) => observable.length == 2,
+    _whenReaction = _counter.when(
+      (observable) => observable.value.length == 2,
       _asyncWhen,
     );
 
@@ -46,18 +45,16 @@ class _ExampleViewState extends State<ExampleView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ObserverPreferredSize(
-        listenables: [counter],
         builder: (_) => AppBar(
           title: Text(
-            counter.length.toString(),
+            _counter.value.length.toString(),
           ),
         ),
       ),
       body: Center(
         child: Observer(
-          listenables: [counter],
           builder: (_) => Text(
-            counter.toString(),
+            _counter.value.toString(),
             style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
           ),
         ),
@@ -65,8 +62,8 @@ class _ExampleViewState extends State<ExampleView> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.add),
-        label: const Text('Increment'),
-        onPressed: () => counter.add(counter.length + 1),
+        label: const Text('Add Item'),
+        onPressed: () => _counter.value.add(_counter.value.length + 1),
       ),
     );
   }

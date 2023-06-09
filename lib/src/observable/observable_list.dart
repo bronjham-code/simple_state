@@ -1,11 +1,40 @@
 import 'dart:collection';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
+import 'package:simple_state/src/observable/observable.dart';
+import 'package:simple_state/src/store.dart';
 
 /// An observable indexable collection of objects with a length.
-class ObservableList<T> extends ChangeNotifier with ListMixin<T> {
+class ObservableList<T> implements ObservableBase<List<T>> {
+  ObservableList([List<T>? value]) : _value = _ObservableList(value ?? []);
+  final _ObservableList<T> _value;
+
+  @override
+  List<T> get value {
+    Store.instance.reportRead(this);
+
+    return _value;
+  }
+
+  @override
+  void addListener(VoidCallback listener) => _value.addListener(listener);
+
+  @override
+  void dispose() => _value.dispose();
+
+  @override
+  bool get hasListeners => _value.hasListeners;
+
+  @override
+  void notifyListeners() => _value.notifyListeners();
+
+  @override
+  void removeListener(VoidCallback listener) => _value.removeListener(listener);
+}
+
+class _ObservableList<T> extends ChangeNotifier with ListMixin<T> {
   /// Creates a observable list of the given length.
-  ObservableList([List<T>? value]) : _value = value ?? [];
+  _ObservableList([List<T>? value]) : _value = value ?? [];
 
   final List<T> _value;
 
@@ -28,8 +57,7 @@ class ObservableList<T> extends ChangeNotifier with ListMixin<T> {
   }
 
   @override
-  ObservableList<T> operator +(List<T> other) =>
-      ObservableList<T>(_value + other);
+  _ObservableList<T> operator +(List<T> other) => _ObservableList<T>(_value + other);
 
   @override
   void clear() {

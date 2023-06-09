@@ -1,20 +1,23 @@
 import 'dart:async';
 
-import 'package:simple_state/src/observer_listener_mixin.dart';
 import 'package:flutter/foundation.dart';
+import 'package:simple_state/src/observer_listener_mixin.dart';
+import 'package:simple_state/src/store.dart';
 
 /// Reactions are essentially a subscription to changes `Observable<T>`, `ObservableList<T>`, `ObservableMap<K,V>`
 /// and `ObservableSet<T>` essentially any implementation of `Listenable`.
 class Reaction with ObserverListenerMixin {
   /// Creates a new reaction.
   Reaction.when({
-    required List<Listenable> listenables,
     required ConditionCallback condition,
     required VoidCallback reaction,
     bool fireImmediately = false,
   })  : _condition = condition,
         _reaction = reaction {
-    addListeners(listenables, _runReaction);
+    Store.instance.beginBuild(_listen);
+    _condition();
+    Store.instance.endBuild(_listen);
+
     if (fireImmediately) {
       _runReaction();
     }
@@ -26,7 +29,6 @@ class Reaction with ObserverListenerMixin {
 
   /// Creates a async reaction.
   static Future<void> asyncWhen({
-    required List<Listenable> listenables,
     required ConditionCallback condition,
     required ReactionCallback reaction,
     bool fireImmediately = false,
@@ -34,7 +36,6 @@ class Reaction with ObserverListenerMixin {
     final completer = Completer<void>();
 
     final whenReaction = Reaction.when(
-      listenables: listenables,
       condition: condition,
       reaction: completer.complete,
       fireImmediately: fireImmediately,
@@ -43,6 +44,10 @@ class Reaction with ObserverListenerMixin {
     await completer.future;
     whenReaction.removeListeners();
     await reaction();
+  }
+
+  void _listen(Listenable listenable) {
+    addListener(listenable, _runReaction);
   }
 
   void _runReaction() {
