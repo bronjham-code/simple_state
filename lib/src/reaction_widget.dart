@@ -8,14 +8,11 @@ class ReactionWidget extends StatefulWidget {
   /// Creates an reaction widget.
   const ReactionWidget({
     super.key,
-    required this.listenables,
     required this.condition,
     required this.reaction,
     required this.child,
     this.fireImmediately = false,
   });
-
-  final List<Listenable> listenables;
 
   final ConditionCallback condition;
 
@@ -35,7 +32,6 @@ class _ReactionWidgetState extends State<ReactionWidget> {
   @override
   void initState() {
     _reaction = Reaction.when(
-      listenables: widget.listenables,
       condition: widget.condition,
       reaction: () => widget.reaction(context),
       fireImmediately: widget.fireImmediately,

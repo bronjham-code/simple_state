@@ -38,25 +38,24 @@ class TodoList {
     selectedFilter = Observable(all);
   }
 
-  bool get hasCompleted => items.any((todo) => todo.completed);
+  bool get hasCompleted => items.value.any((todo) => todo.completed);
 
-  bool get hasNotCompleted => items.any((todo) => !todo.completed);
+  bool get hasNotCompleted => items.value.any((todo) => !todo.completed);
 
   void add() {
-    items.insert(0, Todo(title.value, false));
+    items.value.insert(0, Todo(title.value, false));
     title.value = '';
   }
 
-  void removeCompleted() => items.removeWhere((todo) => todo.completed);
+  void removeCompleted() => items.value.removeWhere((todo) => todo.completed);
 
-  void toggleCompleted(Todo todo) =>
-      items[items.indexOf(todo)] = todo.toggleCompleted();
+  void toggleCompleted(Todo todo) => items.value[items.value.indexOf(todo)] = todo.toggleCompleted();
 
   void markAllCompleted() {
-    for (int index = 0; index < items.length; ++index) {
-      final todo = items[index];
+    for (int index = 0; index < items.value.length; ++index) {
+      final todo = items.value[index];
       if (!todo.completed) {
-        items[index] = todo.markCompleted();
+        items.value[index] = todo.markCompleted();
       }
     }
   }
@@ -65,7 +64,7 @@ class TodoList {
 
   void setTitle(String value) => title.value = value;
 
-  void delete(Todo todo) => items.remove(todo);
+  void delete(Todo todo) => items.value.remove(todo);
 
   void dispose() {
     for (final filter in filters) {

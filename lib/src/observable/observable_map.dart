@@ -1,11 +1,41 @@
 import 'dart:collection';
 import 'package:flutter/foundation.dart';
+import 'package:simple_state/src/observable/observable.dart';
+import 'package:simple_state/src/store.dart';
 
 /// A observable collection of key/value pairs, from which you retrieve a value
 /// using its associated key.
-class ObservableMap<K, V> extends ChangeNotifier with MapMixin<K, V> {
+///
+class ObservableMap<K, V> implements ObservableBase<Map<K, V>> {
+  ObservableMap([Map<K, V>? value]) : _value = _ObservableMap(value ?? {});
+  final _ObservableMap<K, V> _value;
+
+  @override
+  Map<K, V> get value {
+    Store.instance.reportRead(this);
+
+    return _value;
+  }
+
+  @override
+  void addListener(VoidCallback listener) => _value.addListener(listener);
+
+  @override
+  void dispose() => _value.dispose();
+
+  @override
+  bool get hasListeners => _value.hasListeners;
+
+  @override
+  void notifyListeners() => _value.notifyListeners();
+
+  @override
+  void removeListener(VoidCallback listener) => _value.removeListener(listener);
+}
+
+class _ObservableMap<K, V> extends ChangeNotifier with MapMixin<K, V> {
   /// Creates an observable [LinkedHashMap].
-  ObservableMap([Map<K, V>? value]) : _value = value ?? {};
+  _ObservableMap([Map<K, V>? value]) : _value = value ?? {};
 
   final Map<K, V> _value;
 

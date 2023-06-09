@@ -85,36 +85,29 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
   Widget _buildActionBar() => Observer(
-        listenables: [_todoList.items],
         builder: (_) => Wrap(
           alignment: WrapAlignment.center,
           spacing: 12,
           children: [
-            _buildActionButton(
-                title: 'Remove completed',
-                onPressed:
-                    _todoList.hasCompleted ? _onRemoveCompletedPressed : null),
+            _buildActionButton(title: 'Remove completed', onPressed: _todoList.hasCompleted ? _onRemoveCompletedPressed : null),
             _buildActionButton(
               title: 'Mark all completed',
-              onPressed:
-                  _todoList.hasNotCompleted ? _onMarkAllCompletedPressed : null,
+              onPressed: _todoList.hasNotCompleted ? _onMarkAllCompletedPressed : null,
             ),
           ],
         ),
       );
 
   Widget _buildInfoText() => Observer(
-        listenables: [_todoList.items],
         builder: (_) {
           final String text;
-          if (_todoList.items.isEmpty) {
+          if (_todoList.items.value.isEmpty) {
             text = "There are no Todos here. Why don't you add one?.";
           } else {
             final pending = _todoList.pending.filteredItems;
             final completed = _todoList.completed.filteredItems;
-            final suffix = pending.length == 1 ? 'todo' : 'todos';
-            text =
-                '${pending.length} pending $suffix, ${completed.length} completed';
+            final suffix = pending.value.length == 1 ? 'todo' : 'todos';
+            text = '${pending.value.length} pending $suffix, ${completed.value.length} completed';
           }
 
           return Padding(
@@ -125,9 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
   List<bool> _isFilterSelected() {
-    final isSelected = _todoList.filters
-        .map((f) => _todoList.selectedFilter.value == f)
-        .toList();
+    final isSelected = _todoList.filters.map((f) => _todoList.selectedFilter.value == f).toList();
 
     return isSelected;
   }
@@ -136,29 +127,23 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Center(
           child: Observer(
-            listenables: [_todoList.selectedFilter],
             builder: (_) => ToggleButtons(
               onPressed: _todoList.setFilterByIndex,
               isSelected: _isFilterSelected(),
-              children:
-                  _todoList.filters.map((f) => _buildFilter(f.name)).toList(),
+              children: _todoList.filters.map((f) => _buildFilter(f.name)).toList(),
             ),
           ),
         ),
       );
 
   Widget _buildTodoList() => Observer(
-        listenables: [
-          _todoList.selectedFilter,
-          _todoList.items,
-        ],
         builder: (_) {
           final filteredItems = _todoList.selectedFilter.value.filteredItems;
 
           return ListView.builder(
             shrinkWrap: true,
-            itemCount: filteredItems.length,
-            itemBuilder: (_, index) => _buildTodoItem(filteredItems[index]),
+            itemCount: filteredItems.value.length,
+            itemBuilder: (_, index) => _buildTodoItem(filteredItems.value[index]),
           );
         },
       );
@@ -168,15 +153,12 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             child: TextFormField(
               controller: _controller,
-              decoration:
-                  const InputDecoration(hintText: 'What should be done?'),
+              decoration: const InputDecoration(hintText: 'What should be done?'),
             ),
           ),
           Observer(
-            listenables: [_todoList.title],
             builder: (_) => TextButton(
-              onPressed:
-                  _todoList.title.value.isNotEmpty ? _onAddPressed : null,
+              onPressed: _todoList.title.value.isNotEmpty ? _onAddPressed : null,
               child: const Text('Add'),
             ),
           ),
@@ -200,9 +182,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ObserverPreferredSize(
-        listenables: [_todoList.pending.filteredItems],
         builder: (_) => AppBar(
-          title: _buildBarTitle(_todoList.pending.filteredItems.length),
+          title: _buildBarTitle(_todoList.pending.filteredItems.value.length),
         ),
       ),
       body: Padding(

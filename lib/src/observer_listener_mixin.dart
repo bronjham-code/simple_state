@@ -5,21 +5,17 @@ mixin ObserverListenerMixin {
   VoidCallback? _callback;
   final _listenables = <Listenable>[];
 
-  void addListeners(List<Listenable> listenables, VoidCallback callback) {
-    if (_listenables.isNotEmpty) {
-      removeListeners();
-    }
+  void addListener(Listenable listenable, VoidCallback callback) {
     _callback = callback;
-    _listenables.addAll(listenables);
-    for (final listenable in listenables) {
-      listenable.addListener(callback);
-    }
+    _listenables.add(listenable);
+    listenable.addListener(callback);
   }
 
   void removeListeners() {
-    if (_callback != null) {
+    final callback = _callback;
+    if (callback != null) {
       for (final listenable in _listenables) {
-        listenable.removeListener(_callback!);
+        listenable.removeListener(callback);
       }
     }
     _listenables.clear();

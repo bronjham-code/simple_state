@@ -7,7 +7,6 @@ extension ObservableExtensions<T> on Observable<T> {
     VoidCallback reaction,
   ) =>
       Reaction.when(
-        listenables: [this],
         condition: () => condition(this),
         reaction: reaction,
       );
@@ -19,7 +18,6 @@ extension ObservableListExtensions<T> on ObservableList<T> {
     VoidCallback reaction,
   ) =>
       Reaction.when(
-        listenables: [this],
         condition: () => condition(this),
         reaction: reaction,
       );
@@ -31,7 +29,6 @@ extension ObservableSetExtensions<T> on ObservableSet<T> {
     VoidCallback reaction,
   ) =>
       Reaction.when(
-        listenables: [this],
         condition: () => condition(this),
         reaction: reaction,
       );
@@ -43,7 +40,6 @@ extension ObservableMapExtensions<K, V> on ObservableMap<K, V> {
     VoidCallback reaction,
   ) =>
       Reaction.when(
-        listenables: [this],
         condition: () => condition(this),
         reaction: reaction,
       );
