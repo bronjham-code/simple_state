@@ -6,6 +6,9 @@ mixin ObserverListenerMixin {
   final _listenables = <Listenable>[];
 
   void addListener(Listenable listenable, VoidCallback callback) {
+    if (_listenables.contains(listenable)) {
+      return;
+    }
     _callback = callback;
     _listenables.add(listenable);
     listenable.addListener(callback);
