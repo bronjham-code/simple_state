@@ -19,18 +19,18 @@ class ReactionBuilder<T> extends StatefulWidget {
 }
 
 class _ReactionBuilderState<T> extends State<ReactionBuilder<T>> {
-  Reaction<T>? _reaction;
+  late final Reaction<T> _reaction;
 
   @override
-  void didChangeDependencies() {
-    _reaction ??= widget.create(context);
+  void initState() {
+    _reaction = widget.create(context);
 
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
   void dispose() {
-    _reaction?.removeListeners();
+    _reaction.removeListeners();
 
     super.dispose();
   }
