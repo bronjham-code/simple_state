@@ -17,11 +17,13 @@ class ExampleView extends StatefulWidget {
 class _ExampleViewState extends State<ExampleView> {
   final _counter = ObservableList<int>();
 
+  List<int> get _getCounter => _counter.value;
+
   late final Reaction _whenReaction;
 
   Future<void> _asyncWhen() => Reaction.asyncWhen(
-        pointer: () => _counter.value.length,
-        reaction: (_) => _counter.value.clear(),
+        pointer: () => _getCounter.length,
+        reaction: (_) => _getCounter.clear(),
         when: (current, previous) => current == 5,
       );
 
@@ -36,7 +38,7 @@ class _ExampleViewState extends State<ExampleView> {
   Widget build(BuildContext context) {
     return ReactionBuilder(
       create: (context) => Reaction.when(
-        pointer: () => _counter.value.length,
+        pointer: () => _getCounter.length,
         reaction: (_) => _asyncWhen(),
         when: (current, previous) => current == 2,
       ),
@@ -44,15 +46,21 @@ class _ExampleViewState extends State<ExampleView> {
         appBar: ObserverPreferredSize(
           builder: (_) => AppBar(
             title: Text(
-              _counter.value.length.toString(),
+              _getCounter.length.toString(),
             ),
           ),
         ),
         body: Center(
           child: Observer(
-            builder: (_) => Text(
-              _counter.value.toString(),
-              style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+            builder: (_) => ListView.builder(
+              itemCount: _getCounter.length,
+              itemBuilder: (context, index) => Text(
+                _getCounter[index].toString(),
+                style: const TextStyle(
+                  fontSize: 36,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ),
@@ -60,7 +68,7 @@ class _ExampleViewState extends State<ExampleView> {
         floatingActionButton: FloatingActionButton.extended(
           icon: const Icon(Icons.add),
           label: const Text('Add Item'),
-          onPressed: () => _counter.value.add(_counter.value.length + 1),
+          onPressed: () => _getCounter.add(_getCounter.length + 1),
         ),
       ),
     );

@@ -17,7 +17,13 @@ class Observer extends StatefulWidget {
 }
 
 class _ObserverState extends State<Observer> with ObserverListenerMixin {
-  void _reaction() => setState(() {});
+  void _reaction() {
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {});
+  }
 
   void _listen(Listenable listenable) => addListener(listenable, _reaction);
 
