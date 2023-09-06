@@ -1,3 +1,7 @@
+## [1.3.0]
+
+- Removed the need to specify listenables
+
 ## [1.2.2]
 
 - Added `ReactionWidget`.
